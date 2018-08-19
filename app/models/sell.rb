@@ -1,6 +1,15 @@
-class Sell &lt; ApplicationRecord
+class Sell < ApplicationRecord
   include Fae::BaseModelConcern
   enum status: { finished: 0, canceled: 1 }
+
+  belongs_to :discount
+  belongs_to :client
+
+  has_many :sell_products
+  has_many :products, through: :sell_products
+  
+  has_many :sell_services
+  has_many :services, through: :sell_services
 
   validates :client, presence: true
  
@@ -12,6 +21,4 @@ class Sell &lt; ApplicationRecord
     order(:id)
   end
  
-  belongs_to :discount
-  belongs_to :client
 end
